@@ -12,10 +12,12 @@ const checkEnvironmentVars = () => {
 
 const start = async () => {
     checkEnvironmentVars();
-    mongoose
-        .connect(process.env.MONGO_URI!)
-        .then(r => console.log(r.connection.db.databaseName))
-        .catch(e => console.log(e));
+    try {
+        await mongoose.connect(process.env.MONGO_URI!);
+    } catch (e) {
+        console.error(e);
+        process.exit(1);
+    }
     app.listen(process.env.PORT || 5000, () => {
         console.log(`listening on ${process.env.PORT || 5000}`);
     });
