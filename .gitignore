@@ -1,0 +1,11 @@
+node_modules/
+*.js
+*.js.map
+*.log
+.DS_store
+tsconfig.tsbuildinfo
+eslint_report.json
+eslint_report.html
+tsconfig*.tsbuildinfo
+.vscode/settings.json
+dist/
