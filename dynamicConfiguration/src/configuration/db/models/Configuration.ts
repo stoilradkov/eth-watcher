@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { Configuration } from "../../domain/Configuration.type";
+import { Configuration, NumberFilter, StringFilter } from "../../domain/Configuration.type";
 
 interface ConfigurationModel extends mongoose.Model<ConfigurationDocument> {
     build(attributes: Configuration): ConfigurationDocument;
@@ -14,10 +14,20 @@ const configurationSchema = new mongoose.Schema({
             type: String,
             required: false,
         },
+        filterType: {
+            type: String,
+            enum: [StringFilter.EQUAL, StringFilter.CONTAINS],
+            required: false,
+        },
     },
     blockNumber: {
         value: {
             type: Number,
+            required: false,
+        },
+        filterType: {
+            type: String,
+            enum: [NumberFilter.EQUAL, NumberFilter.LESS_THAN, NumberFilter.GREATER_THAN],
             required: false,
         },
     },
@@ -26,10 +36,20 @@ const configurationSchema = new mongoose.Schema({
             type: Number,
             required: false,
         },
+        filterType: {
+            type: String,
+            enum: [NumberFilter.EQUAL, NumberFilter.LESS_THAN, NumberFilter.GREATER_THAN],
+            required: false,
+        },
     },
     from: {
         value: {
             type: String,
+            required: false,
+        },
+        filterType: {
+            type: String,
+            enum: [StringFilter.EQUAL, StringFilter.CONTAINS],
             required: false,
         },
     },
@@ -38,10 +58,20 @@ const configurationSchema = new mongoose.Schema({
             type: String,
             required: false,
         },
+        filterType: {
+            type: String,
+            enum: [StringFilter.EQUAL, StringFilter.CONTAINS],
+            required: false,
+        },
     },
     gas: {
         value: {
             type: Number,
+            required: false,
+        },
+        filterType: {
+            type: String,
+            enum: [NumberFilter.EQUAL, NumberFilter.LESS_THAN, NumberFilter.GREATER_THAN],
             required: false,
         },
     },
@@ -50,10 +80,20 @@ const configurationSchema = new mongoose.Schema({
             type: Number,
             required: false,
         },
+        filterType: {
+            type: String,
+            enum: [NumberFilter.EQUAL, NumberFilter.LESS_THAN, NumberFilter.GREATER_THAN],
+            required: false,
+        },
     },
     hash: {
         value: {
             type: String,
+            required: false,
+        },
+        filterType: {
+            type: String,
+            enum: [StringFilter.EQUAL, StringFilter.CONTAINS],
             required: false,
         },
     },
@@ -62,16 +102,31 @@ const configurationSchema = new mongoose.Schema({
             type: String,
             required: false,
         },
+        filterType: {
+            type: String,
+            enum: [StringFilter.EQUAL, StringFilter.CONTAINS],
+            required: false,
+        },
     },
     transactionIndex: {
         value: {
             type: Number,
             required: false,
         },
+        filterType: {
+            type: String,
+            enum: [NumberFilter.EQUAL, NumberFilter.LESS_THAN, NumberFilter.GREATER_THAN],
+            required: false,
+        },
     },
     value: {
         value: {
             type: Number,
+            required: false,
+        },
+        filterType: {
+            type: String,
+            enum: [NumberFilter.EQUAL, NumberFilter.LESS_THAN, NumberFilter.GREATER_THAN],
             required: false,
         },
     },

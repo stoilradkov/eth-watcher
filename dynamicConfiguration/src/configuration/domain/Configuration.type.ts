@@ -19,16 +19,16 @@ export interface NumberFilterType {
 }
 
 export interface Configuration {
-    configurationName: string;
-    blockHash: StringFilterType;
-    blockNumber: NumberFilterType;
-    chainId: NumberFilterType;
-    from: StringFilterType;
-    to: StringFilterType;
-    gas: NumberFilterType;
-    gasPrice: NumberFilterType;
-    hash: StringFilterType;
-    input: StringFilterType;
-    transactionIndex: NumberFilterType;
-    value: NumberFilterType;
+    configurationName?: string;
+    blockHash?: StringFilterType;
+    blockNumber?: NumberFilterType;
+    chainId?: NumberFilterType;
+    from?: StringFilterType;
+    to?: StringFilterType;
+    gas?: NumberFilterType;
+    gasPrice?: NumberFilterType;
+    hash?: StringFilterType;
+    input?: StringFilterType;
+    transactionIndex?: NumberFilterType;
+    value?: NumberFilterType;
 }
