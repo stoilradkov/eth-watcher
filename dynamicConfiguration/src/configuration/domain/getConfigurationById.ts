@@ -1,7 +1,7 @@
 import { NotFoundError } from "../../errors/notFoundError";
-import { getConfigurationFunction } from "../interfaces/getConfiguration.type";
+import { GetConfigurationByIdFunction } from "../interfaces/getConfigurationById.type";
 
-export const getConfiguraton = async (id: string, getConfigurationById: getConfigurationFunction) => {
+export const getConfiguratonById = async (id: string, getConfigurationById: GetConfigurationByIdFunction) => {
     const configuration = await getConfigurationById(id);
     if (configuration === null) {
         return { testing: "asd" };

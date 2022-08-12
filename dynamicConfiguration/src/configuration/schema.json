@@ -1,0 +1,167 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "configurationName": {
+        "type": "string"
+      },
+      "blockHash": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "string"
+          },
+          "filterType": {
+            "type": "string",
+            "enum": ["EQUAL","CONTAINS"]
+          }
+        }
+      },
+      "blockNumber": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "integer"
+          },
+          "filterType": {
+            "type": "string",
+            "enum": ["EQUAL","LESS_THAN","GREATER_THAN"]
+          }
+        }
+      },
+      "chainId": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "integer"
+          },
+          "filterType": {
+            "type": "string",
+            "enum": ["EQUAL","LESS_THAN","GREATER_THAN"]
+          }
+        }
+      },
+      "from": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "string"
+          },
+          "filterType": {
+            "type": "string",
+            "enum": ["EQUAL","CONTAINS"]
+          }
+        }
+      },
+      "to": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "string"
+          },
+          "filterType": {
+            "type": "string",
+            "enum": ["EQUAL","CONTAINS"]
+          }
+        }
+      },
+      "gas": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "integer"
+          },
+          "filterType": {
+            "type": "string",
+            "enum": ["EQUAL","LESS_THAN","GREATER_THAN"]
+          }
+        }
+      },
+      "gasPrice": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "integer"
+          },
+          "filterType": {
+            "type": "string",
+            "enum": ["EQUAL","LESS_THAN","GREATER_THAN"]
+          }
+        }
+      },
+      "hash": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "string"
+          },
+          "filterType": {
+            "type": "string",
+            "enum": ["EQUAL","CONTAINS"]
+          }
+        }
+      },
+      "input": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "string"
+          },
+          "filterType": {
+            "type": "string",
+            "enum": ["EQUAL","CONTAINS"]
+          }
+        }
+      },
+      "transactionIndex": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "integer"
+          },
+          "filterType": {
+            "type": "string",
+            "enum": ["EQUAL","LESS_THAN","GREATER_THAN"]
+          }
+        }
+      },
+      "value": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "integer"
+          },
+          "filterType": {
+            "type": "string",
+            "enum": ["EQUAL","LESS_THAN","GREATER_THAN"]
+          }
+        }
+      }
+    },
+    "additionalProperties": false,
+    "anyOf": [{
+        "required" : ["configurationName"]
+      }, {
+        "required" : ["blockHash"]
+      }, {
+        "required" : ["blockNumber"]
+      }, {
+        "required" : ["chainId"]
+      }, {
+        "required" : ["from"]
+      }, {
+        "required" : ["to"]
+      }, {
+        "required" : ["gas"]
+      }, {
+        "required" : ["gasPrice"]
+      }, {
+        "required" : ["hash"]
+      }, {
+        "required" : ["input"]
+      }, {
+        "required" : ["transactionIndex"]
+      }, {
+        "required" : ["value"]
+      }]
+  }
