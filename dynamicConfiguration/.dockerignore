@@ -1,0 +1,10 @@
+./node_modules/
+Dockerfile
+.dockerignore
+docker-compose.yml
+./dist/
+tsconfig.tsbuildinfo
+eslint_report.json
+eslint_report.html
+tsconfig*.tsbuildinfo
+.vscode/settings.json
