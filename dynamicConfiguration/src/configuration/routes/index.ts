@@ -1,3 +1,4 @@
-import { getConfigurationHandler } from "./getConfiguration";
+import { getConfigurationByIdHandler } from "./getConfigurationById";
+import { getConfigurationsHandler } from "./getConfigurations";
 
-export { getConfigurationHandler };
+export { getConfigurationByIdHandler, getConfigurationsHandler };
