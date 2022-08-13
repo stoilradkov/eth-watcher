@@ -20,7 +20,7 @@ export class TransactionProcessor {
         console.log(message);
     };
 
-    public processTranscations = (data: BlockHeader) => {
+    public processTransactions = (data: BlockHeader) => {
         console.log(data);
     };
 }
