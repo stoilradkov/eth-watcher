@@ -4,8 +4,7 @@ import { GetConfigurationByIdFunction } from "../interfaces/getConfigurationById
 export const getConfiguratonById = async (id: string, getConfigurationById: GetConfigurationByIdFunction) => {
     const configuration = await getConfigurationById(id);
     if (configuration === null) {
-        return { testing: "asd" };
-        // throw new NotFoundError();
+        throw new NotFoundError();
     }
     return configuration;
 };
