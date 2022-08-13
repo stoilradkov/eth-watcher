@@ -33,7 +33,7 @@ const configurationSchema = new mongoose.Schema({
     },
     chainId: {
         value: {
-            type: Number,
+            type: String,
             required: false,
         },
         filterType: {
@@ -77,7 +77,7 @@ const configurationSchema = new mongoose.Schema({
     },
     gasPrice: {
         value: {
-            type: Number,
+            type: String,
             required: false,
         },
         filterType: {
@@ -121,7 +121,7 @@ const configurationSchema = new mongoose.Schema({
     },
     value: {
         value: {
-            type: Number,
+            type: String,
             required: false,
         },
         filterType: {

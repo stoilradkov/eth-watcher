@@ -33,7 +33,7 @@
         "type": "object",
         "properties": {
           "value": {
-            "type": "integer"
+            "type": "string"
           },
           "filterType": {
             "type": "string",
@@ -81,7 +81,7 @@
         "type": "object",
         "properties": {
           "value": {
-            "type": "integer"
+            "type": "string"
           },
           "filterType": {
             "type": "string",
@@ -129,7 +129,7 @@
         "type": "object",
         "properties": {
           "value": {
-            "type": "integer"
+            "type": "string"
           },
           "filterType": {
             "type": "string",
