@@ -1,7 +1,7 @@
 import { DataTypes, Sequelize } from "sequelize";
 
-export const transactionModel = (client: Sequelize) => {
-    client.define("transaction", {
+export const transactionModel = async (client: Sequelize) => {
+    const transaction = client.define("transaction", {
         blockHash: {
             allowNull: true,
             autoIncrement: false,
@@ -10,7 +10,7 @@ export const transactionModel = (client: Sequelize) => {
         blockNumber: {
             allowNull: true,
             autoIncrement: false,
-            type: DataTypes.NUMBER,
+            type: DataTypes.BIGINT,
         },
         from: {
             allowNull: false,
@@ -20,7 +20,7 @@ export const transactionModel = (client: Sequelize) => {
         gas: {
             allowNull: false,
             autoIncrement: false,
-            type: DataTypes.NUMBER,
+            type: DataTypes.BIGINT,
         },
         gasPrice: {
             allowNull: false,
@@ -41,13 +41,13 @@ export const transactionModel = (client: Sequelize) => {
         nonce: {
             allowNull: false,
             autoIncrement: false,
-            type: DataTypes.NUMBER,
+            type: DataTypes.BIGINT,
         },
 
         transactionIndex: {
             allowNull: true,
             autoIncrement: false,
-            type: DataTypes.NUMBER,
+            type: DataTypes.BIGINT,
         },
 
         to: {
@@ -66,4 +66,5 @@ export const transactionModel = (client: Sequelize) => {
             type: DataTypes.STRING,
         },
     });
+    await transaction.sync();
 };

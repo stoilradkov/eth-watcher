@@ -1,5 +1,10 @@
 import { Transaction } from "./Transaction.type";
 
+export interface SaveTransactionPayload {
+    transaction: Transaction;
+    id: string;
+}
+
 export interface Client {
-    saveTransaction: (transaction: Transaction, configurationId: string) => Promise<boolean>;
+    saveTransactions: (transactionsPayload: SaveTransactionPayload[]) => Promise<boolean>;
 }
