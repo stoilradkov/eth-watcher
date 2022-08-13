@@ -1,5 +1,4 @@
-import { BadRequestError } from "../../errors/badRequestError";
-import { CreateConfigurationFunction } from "../interfaces/createConfigurationFunction.type";
+import { CreateConfigurationFunction } from "../interfaces/createConfiguration.type";
 import { Configuration } from "./Configuration.type";
 
 export const createConfiguration = async (
