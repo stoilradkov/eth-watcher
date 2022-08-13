@@ -8,6 +8,8 @@ services:
       - $REDIS_LOCAL_PORT:$REDIS_DOCKER_PORT
     volumes: 
       - cache:/data
+    networks:
+      - dynamicconfiguration_default
   postgres:
     image: postgres:latest
     restart: unless-stopped
@@ -20,7 +22,9 @@ services:
       - $POSTGRES_LOCAL_PORT:$POSTGRES_DOCKER_PORT
     volumes:
       - postgres:/var/lib/postgresql/data
-  api:
+    networks:
+      - dynamicconfiguration_default
+  app:
     depends_on:
       - postgres
       - cache
@@ -33,6 +37,11 @@ services:
       - $PORT:$PORT
     volumes:
       - .:/usr/app
+    networks:
+      - dynamicconfiguration_default
+networks:
+  dynamicconfiguration_default:
+    external: true
 
 volumes: 
   postgres: {}
