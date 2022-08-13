@@ -13,7 +13,7 @@ const checkEnvironmentVars = () => {
 const start = async () => {
     checkEnvironmentVars();
     try {
-        await mongoose.connect(process.env.MONGO_URI!);
+        await mongoose.connect(process.env.MONGO_URI ?? "");
     } catch (e) {
         console.error(e);
         process.exit(1);
