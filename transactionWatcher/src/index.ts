@@ -3,7 +3,7 @@ import { Api } from "./configurationApi/api";
 import { getClient } from "./db/client";
 import { initializeSubscriber } from "./subscriber";
 import { TransactionScanner } from "./transactionScanner";
-import { TransactionProcessor } from "./transcationProcessor";
+import { TransactionProcessor } from "./transactionProcessor";
 import { Configuration } from "./types/Configuration.type";
 
 const init = async () => {
@@ -19,7 +19,7 @@ const init = async () => {
     const transactionScanner = new TransactionScanner(
         new Web3(new Web3.providers.WebsocketProvider(`wss://mainnet.infura.io/ws/v3/${process.env.INFURA_API_KEY}`))
     );
-    transactionScanner.subscribe(transactionProcessor.processTranscations.bind(this));
+    transactionScanner.subscribe(transactionProcessor.processTransactions.bind(this));
 };
 
 init();
