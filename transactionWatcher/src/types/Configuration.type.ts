@@ -31,4 +31,5 @@ export interface Configuration {
     input?: StringFilterType;
     transactionIndex?: NumberFilterType;
     value?: NumberFilterType;
+    id: string;
 }

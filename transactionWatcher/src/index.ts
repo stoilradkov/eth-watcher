@@ -11,15 +11,16 @@ const init = async () => {
     const dbClient = await getClient(process.env.POSTGRES_URI ?? "");
     const configurations = await apiClient.get<Configuration[]>("/api/configuration");
     console.log(configurations);
-    const transactionProcessor = new TransactionProcessor({ configurations, client: dbClient });
+    const web3 = new Web3(
+        new Web3.providers.WebsocketProvider(`wss://ropsten.infura.io/ws/v3/${process.env.INFURA_API_KEY}`)
+    );
+    const transactionProcessor = new TransactionProcessor({ configurations, client: dbClient, web3 });
     await initializeSubscriber(
         process.env.REDIS_URI ?? "",
         transactionProcessor.configurationChangeListener.bind(this)
     );
-    const transactionScanner = new TransactionScanner(
-        new Web3(new Web3.providers.WebsocketProvider(`wss://mainnet.infura.io/ws/v3/${process.env.INFURA_API_KEY}`))
-    );
-    transactionScanner.subscribe(transactionProcessor.processTransactions.bind(this));
+    const transactionScanner = new TransactionScanner(web3);
+    transactionScanner.subscribe(transactionProcessor.receiveBlockHeader.bind(this));
 };
 
 init();
