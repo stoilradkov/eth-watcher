@@ -3,6 +3,7 @@ import { updateConfiguration as updateConfigurationInDb } from "./../db/updateCo
 import { validateId } from "./util/idValidator";
 import { validate } from "./util/configurationValidator";
 import { updateConfiguration } from "../domain/updateConfiguration";
+import { sendUpdateConfiguration } from "../configurationChange/updateConfiguration/sendUpdateConfiguration";
 
 const handler = async (req: Request, res: Response) => {
     const id = req.params.id;
@@ -11,7 +12,12 @@ const handler = async (req: Request, res: Response) => {
     const configurationPayload = req.body;
     validate(configurationPayload);
 
-    const configuration = await updateConfiguration(id, configurationPayload, updateConfigurationInDb);
+    const configuration = await updateConfiguration({
+        id,
+        configurationPayload,
+        updateConfigurationFunction: updateConfigurationInDb,
+        sendUpdateConfiguration,
+    });
     res.send(configuration);
 };
 
