@@ -1,11 +1,11 @@
 import mongoose from "mongoose";
-import { Configuration, NumberFilter, StringFilter } from "../../domain/Configuration.type";
+import { ConfigurationAttributes, NumberFilter, StringFilter } from "./type";
 
 interface ConfigurationModel extends mongoose.Model<ConfigurationDocument> {
-    build(attributes: Configuration): ConfigurationDocument;
+    build(attributes: ConfigurationAttributes): ConfigurationDocument;
 }
 
-export interface ConfigurationDocument extends Configuration, mongoose.Document {}
+export interface ConfigurationDocument extends ConfigurationAttributes, mongoose.Document {}
 
 const configurationSchema = new mongoose.Schema({
     configurationName: { type: String, required: false },
@@ -132,7 +132,7 @@ const configurationSchema = new mongoose.Schema({
     },
 });
 
-configurationSchema.statics.build = (attributes: Configuration) => {
+configurationSchema.statics.build = (attributes: ConfigurationAttributes) => {
     return new Configuration(attributes);
 };
 
