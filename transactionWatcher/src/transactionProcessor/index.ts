@@ -46,7 +46,9 @@ export class TransactionProcessor {
         }
     };
 
-    private addNewConfiguration = (configuration: Configuration) => this.#configurations.push(configuration);
+    private addNewConfiguration = (configuration: Configuration) => {
+        this.#configurations = [...this.#configurations, configuration];
+    };
 
     private updateConfiguration = (configuration: Configuration) => {
         this.#configurations = this.#configurations.map(config =>
