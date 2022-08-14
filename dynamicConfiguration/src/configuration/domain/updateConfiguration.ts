@@ -1,5 +1,4 @@
-import { MessageType } from "../configurationChange/type";
-import { SendUpdateConfigurationMessageFunction } from "../configurationChange/updateConfigurationMessage/type";
+import { MessageType, SendMessageFunction } from "../configurationChange/type";
 import { UpdateConfigurationFunction } from "../interfaces/updateConfiguration.type";
 import { convertConfigurationPayload } from "../ports/domainToStore/convertConfigurationPayload";
 import { convertConfiguration } from "../ports/storeToDomain/convertConfiguration";
@@ -10,23 +9,22 @@ export interface UpdateConfigurationPayload {
     id: string;
     configurationPayload: Configuration;
     updateConfigurationInStore: UpdateConfigurationFunction;
-    sendUpdateConfigurationMessage: SendUpdateConfigurationMessageFunction;
+    sendMessage: SendMessageFunction;
 }
 
 export const updateConfiguration = async ({
     id,
     configurationPayload,
     updateConfigurationInStore,
-    sendUpdateConfigurationMessage,
+    sendMessage,
 }: UpdateConfigurationPayload) => {
     const convertedConfigurationPayload = convertConfigurationPayload(configurationPayload);
     const updatedConfiguration = convertConfiguration(
         await updateConfigurationInStore(id, convertedConfigurationPayload)
     );
 
-    sendUpdateConfigurationMessage(CONFIGURATION_CHANNEL, {
-        payload: updatedConfiguration,
-        type: MessageType.UPDATE,
+    sendMessage(CONFIGURATION_CHANNEL, {
+        type: MessageType.REFETCH,
     });
 
     return updatedConfiguration;

@@ -1,8 +1,8 @@
 import { Router, Request, Response } from "express";
-import { sendDeleteConfigurationMessage } from "../configurationChange/deleteConfigurationMessage/sendDeleteConfigurationMessage";
 import { deleteConfiguration as deleteConfigurationInStore } from "../store/deleteConfiguration";
 import { deleteConfiguration } from "../domain/deleteConfiguration";
 import { validateId } from "./validation/idValidator";
+import { sendMessage } from "../configurationChange/sendMessage";
 
 const handler = async (req: Request, res: Response) => {
     const id = req.params.id as string | undefined;
@@ -11,7 +11,7 @@ const handler = async (req: Request, res: Response) => {
     const deletedId = await deleteConfiguration({
         id,
         deleteConfigurationInStore,
-        sendDeleteConfigurationMessage,
+        sendMessage,
     });
     res.send({ id: deletedId });
 };
