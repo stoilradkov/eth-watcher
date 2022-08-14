@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "axios": "^0.27.2",
+    "loglevel": "^1.8.0",
     "pg": "^8.7.3",
     "pg-hstore": "^2.3.4",
     "redis": "^4.2.0",

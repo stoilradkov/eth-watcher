@@ -1,6 +1,7 @@
 import Web3 from "web3";
 import { Subscription } from "web3-core-subscriptions";
 import { BlockHeader } from "web3-eth";
+import { logError, logInfo, logWarn } from "../logger";
 
 export type SubscriptionHandlerFunction = (data: BlockHeader) => void;
 
@@ -15,24 +16,29 @@ export class TransactionScanner {
 
     public subscribe = (subscriptionHandler: SubscriptionHandlerFunction) => {
         if (this.#subscription !== null) {
+            logWarn("Tried to subscribe twice");
             return;
         }
         this.#subscription = this.#web3Client.eth.subscribe("newBlockHeaders", (error: Error) => {
             if (error !== null) {
-                throw error;
+                logError("Subscription to newBlockHeaders failed", error);
+                return;
             }
+            logInfo("Subscribed to newBlockHeaders type");
         });
         this.#subscription.on("data", subscriptionHandler);
         this.#subscription.on("error", error => {
-            throw error;
+            logError("Received error from subscription", error);
         });
     };
 
     public unsubscribe = () => {
         this.#subscription?.unsubscribe(error => {
             if (error !== null) {
-                throw error;
+                logError("Error during unsubscription", error);
+                return;
             }
+            logInfo("Unsubscribed successfully");
         });
     };
 }

@@ -1,6 +1,7 @@
 import Web3 from "web3";
 import { BlockHeader } from "web3-eth";
 import { Message, MessageType } from "../configurationListener/Message.type";
+import { logError, logInfo, logWarn } from "../logger";
 import { convertTransactionPayloads } from "../ports/domainToStore/convertTransactionPayload";
 import {
     Configuration,
@@ -31,6 +32,7 @@ export class TransactionProcessor {
     }
 
     public configurationChangeListener = ({ type, payload }: Message) => {
+        logInfo("Received message", type, payload);
         switch (type) {
             case MessageType.NEW:
                 this.addNewConfiguration(payload);
@@ -42,9 +44,10 @@ export class TransactionProcessor {
                 this.deleteConfiguration(payload);
                 break;
             default:
-                console.log("UNKNOWN TYPE", type);
+                logWarn("Unknown message type", type);
                 break;
         }
+        logInfo("Updated configuration list", this.#configurations);
     };
 
     private addNewConfiguration = (configuration: Configuration) => {
@@ -62,6 +65,7 @@ export class TransactionProcessor {
     };
 
     public receiveBlockHeader = async (blockHeader: BlockHeader) => {
+        logInfo("Received block header", blockHeader);
         const block = await this.#web3.eth.getBlock(blockHeader.hash, true);
         this.processTransactions(block.transactions);
     };
@@ -71,7 +75,14 @@ export class TransactionProcessor {
             .map(this.mapTransaction)
             .filter(this.filterMatchedTransactions) as TransactionPayload[];
 
-        this.#store.saveTransactions(convertTransactionPayloads(matchedTransactions));
+        if (matchedTransactions.length !== 0) {
+            logInfo("Saving matched transactions", matchedTransactions);
+            try {
+                this.#store.saveTransactions(convertTransactionPayloads(matchedTransactions));
+            } catch (e) {
+                logError("Could not save transactions", matchedTransactions, e);
+            }
+        }
     };
 
     private mapTransaction = (transaction: Transaction) => {
@@ -120,7 +131,7 @@ export class TransactionProcessor {
             case NumberFilter.GREATER_THAN:
                 return transactionValue > value;
         }
-        console.log("FILTER NOT MATCHED", filterType);
+        logWarn("Unknown filter type", transactionValue, value, filterType);
         return false;
     }
 }
