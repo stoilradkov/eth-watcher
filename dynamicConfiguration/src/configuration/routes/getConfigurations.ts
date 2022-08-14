@@ -1,5 +1,4 @@
 import { Router, Request, Response } from "express";
-import { BadRequestError } from "../../errors/badRequestError";
 import { getConfiguratons } from "../domain/getConfigurations";
 import { getConfigurations as getConfigurationsFromDb } from "../db/getConfigurations";
 
