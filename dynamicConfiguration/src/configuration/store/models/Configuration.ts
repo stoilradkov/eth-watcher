@@ -138,7 +138,7 @@ configurationSchema.statics.build = (attributes: ConfigurationAttributes) => {
 
 configurationSchema.methods.toJSON = function () {
     const configurationObject = this.toObject();
-    configurationObject.id = configurationObject._id;
+    configurationObject.id = configurationObject._id.toString();
     delete configurationObject._id;
     delete configurationObject.__v;
     return configurationObject;

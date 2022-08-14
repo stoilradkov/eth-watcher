@@ -19,16 +19,10 @@ export class TransactionScanner {
             logWarn("Tried to subscribe twice");
             return;
         }
-        this.#subscription = this.#web3Client.eth.subscribe("newBlockHeaders", (error: Error) => {
-            if (error !== null) {
-                logError("Subscription to newBlockHeaders failed", error);
-                return;
-            }
-            logInfo("Subscribed to newBlockHeaders type");
-        });
+        this.#subscription = this.#web3Client.eth.subscribe("newBlockHeaders");
         this.#subscription.on("data", subscriptionHandler);
         this.#subscription.on("error", error => {
-            logError("Received error from subscription", error);
+            logError("Subscription to newBlockHeaders failed", error);
         });
     };
 

@@ -1,4 +1,5 @@
 import { BadRequestError } from "../../errors/badRequestError";
+import { logInfo } from "../../logger";
 import { Configuration } from "./models/Configuration";
 import { isValidId } from "./validation/idValidation";
 

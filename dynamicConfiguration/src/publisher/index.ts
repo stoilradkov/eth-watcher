@@ -7,10 +7,12 @@ export interface PublisherConfig {
 class Publisher {
     #publisher: redis.RedisClientType;
     #isConnected: boolean;
+    #url: string;
 
     constructor({ url }: PublisherConfig) {
         this.#publisher = redis.createClient({ url });
         this.#isConnected = false;
+        this.#url = url;
     }
 
     public publish = async <T>(channel: string, message: T) => {
@@ -21,6 +23,14 @@ class Publisher {
                 this.#isConnected = true;
             } catch (e) {
                 logError("Error connecting to redis instance", e);
+                try {
+                    if (this.#publisher.isOpen) {
+                        this.#publisher.quit();
+                        this.#publisher = redis.createClient({ url: this.#url });
+                    }
+                } catch (e) {
+                    logError("Error while disconnecting", e);
+                }
                 return;
             }
         }
