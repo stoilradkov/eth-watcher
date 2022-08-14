@@ -1,8 +1,8 @@
 import { Router, Request, Response } from "express";
-import { sendNewConfigurationMessage } from "../configurationChange/newConfigurationMessage/sendNewConfiguration";
 import { createConfiguration as createConfigurationInStore } from "../store/createConfiguration";
 import { createConfiguration } from "../domain/createConfiguration";
 import { validate } from "./validation/configurationValidator";
+import { sendMessage } from "../configurationChange/sendMessage";
 
 const handler = async (req: Request, res: Response) => {
     const configurationPayload = req.body;
@@ -11,7 +11,7 @@ const handler = async (req: Request, res: Response) => {
     const configuration = await createConfiguration({
         configurationPayload,
         createConfigurationInStore,
-        sendNewConfigurationMessage,
+        sendMessage,
     });
     res.send(configuration);
 };

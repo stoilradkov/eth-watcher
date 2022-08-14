@@ -11,6 +11,7 @@ import {
     StringFilterType,
 } from "../types/Configuration.type";
 import { isKeyInObject } from "../util/objectKey";
+import { Api } from "./api.type";
 import { Store } from "./store.type";
 import { Transaction, TransactionPayload } from "./Transaction.type";
 
@@ -18,30 +19,27 @@ export interface TransactionProcessorOptions {
     configurations: Configuration[];
     store: Store;
     web3: Web3;
+    apiClient: Api;
 }
 
 export class TransactionProcessor {
     #configurations: Configuration[];
     #store: Store;
     #web3: Web3;
+    #apiClient: Api;
 
-    constructor({ configurations, store, web3 }: TransactionProcessorOptions) {
+    constructor({ configurations, store, web3, apiClient }: TransactionProcessorOptions) {
         this.#configurations = configurations;
         this.#store = store;
         this.#web3 = web3;
+        this.#apiClient = apiClient;
     }
 
-    public configurationChangeListener = ({ type, payload }: Message) => {
-        logInfo("Received message", type, payload);
+    public configurationChangeListener = async ({ type }: Message) => {
+        logInfo("Received message", type);
         switch (type) {
-            case MessageType.NEW:
-                this.addNewConfiguration(payload);
-                break;
-            case MessageType.UPDATE:
-                this.updateConfiguration(payload);
-                break;
-            case MessageType.DELETE:
-                this.deleteConfiguration(payload);
+            case MessageType.REFETCH:
+                await this.updateConfigurations();
                 break;
             default:
                 logWarn("Unknown message type", type);
@@ -50,18 +48,9 @@ export class TransactionProcessor {
         logInfo("Updated configuration list", this.#configurations);
     };
 
-    private addNewConfiguration = (configuration: Configuration) => {
-        this.#configurations = [...this.#configurations, configuration];
-    };
-
-    private updateConfiguration = (configuration: Configuration) => {
-        this.#configurations = this.#configurations.map(config =>
-            config.id === configuration.id ? configuration : config
-        );
-    };
-
-    private deleteConfiguration = ({ id }: { id: string }) => {
-        this.#configurations = this.#configurations.filter(config => config.id !== id);
+    private updateConfigurations = async () => {
+        const configurations = await this.#apiClient.getConfigurations();
+        this.#configurations = configurations;
     };
 
     public receiveBlockHeader = async (blockHeader: BlockHeader) => {

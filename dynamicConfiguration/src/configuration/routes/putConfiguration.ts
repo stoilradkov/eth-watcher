@@ -3,7 +3,7 @@ import { updateConfiguration as updateConfigurationInStore } from "../store/upda
 import { validateId } from "./validation/idValidator";
 import { validate } from "./validation/configurationValidator";
 import { updateConfiguration } from "../domain/updateConfiguration";
-import { sendUpdateConfigurationMessage } from "../configurationChange/updateConfigurationMessage/sendUpdateConfiguration";
+import { sendMessage } from "../configurationChange/sendMessage";
 
 const handler = async (req: Request, res: Response) => {
     const id = req.params.id;
@@ -16,7 +16,7 @@ const handler = async (req: Request, res: Response) => {
         id,
         configurationPayload,
         updateConfigurationInStore,
-        sendUpdateConfigurationMessage,
+        sendMessage,
     });
     res.send(configuration);
 };

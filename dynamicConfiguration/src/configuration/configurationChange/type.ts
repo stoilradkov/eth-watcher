@@ -1,5 +1,9 @@
 export enum MessageType {
-    NEW = "NEW",
-    UPDATE = "UPDATE",
-    DELETE = "DELETE",
+    REFETCH = "REFETCH",
 }
+
+export interface Message {
+    type: MessageType;
+}
+
+export type SendMessageFunction = (channel: string, message: Message) => Promise<void>;
