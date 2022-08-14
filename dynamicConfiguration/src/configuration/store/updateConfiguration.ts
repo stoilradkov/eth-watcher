@@ -1,5 +1,6 @@
 import { BadRequestError } from "../../errors/badRequestError";
 import { NotFoundError } from "../../errors/notFoundError";
+import { logInfo } from "../../logger";
 import { Configuration } from "./models/Configuration";
 import { ConfigurationAttributes } from "./models/type";
 import { isValidId } from "./validation/idValidation";
@@ -17,6 +18,7 @@ export const updateConfiguration = async (id: string, configurationPayload: Conf
     (Object.keys(configurationPayload) as Array<keyof ConfigurationAttributes>).forEach(key => {
         (existingConfiguration[key] as unknown) = configurationPayload[key];
     });
+    logInfo("Updated configuration", existingConfiguration);
 
     await existingConfiguration.save();
     return existingConfiguration;
