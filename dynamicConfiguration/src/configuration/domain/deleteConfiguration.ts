@@ -1,4 +1,5 @@
 import { SendDeleteConfigurationFunction } from "../configurationChange/deleteConfiguration/type";
+import { MessageType } from "../configurationChange/type";
 import { DeleteConfigurationFunction } from "../interfaces/deleteConfiguration.type";
 import { CONFIGURATION_CHANNEL } from "./configurationChannel";
 
@@ -15,7 +16,10 @@ export const deleteConfiguration = async ({
 }: DeleteConfigurationPayload) => {
     const deletedId = await deleteConfigurationFunction(id);
     sendDeleteConfiguration(CONFIGURATION_CHANNEL, {
-        id: deletedId,
+        payload: {
+            id: deletedId,
+        },
+        type: MessageType.DELETE,
     });
     return deletedId;
 };

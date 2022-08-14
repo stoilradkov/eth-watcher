@@ -1,4 +1,5 @@
 import { SendNewConfigurationFunction } from "../configurationChange/newConfiguration/type";
+import { MessageType } from "../configurationChange/type";
 import { CreateConfigurationFunction } from "../interfaces/createConfiguration.type";
 import { Configuration } from "./Configuration.type";
 import { CONFIGURATION_CHANNEL } from "./configurationChannel";
@@ -15,6 +16,9 @@ export const createConfiguration = async ({
     sendNewConfiguration,
 }: CreateConfigurationPayload) => {
     const configuration = await createConfigurationFunction(configurationPayload);
-    sendNewConfiguration(CONFIGURATION_CHANNEL, configuration);
+    sendNewConfiguration(CONFIGURATION_CHANNEL, {
+        payload: configuration,
+        type: MessageType.NEW,
+    });
     return configuration;
 };

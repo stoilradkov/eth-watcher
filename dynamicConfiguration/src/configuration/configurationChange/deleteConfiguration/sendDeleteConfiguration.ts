@@ -1,4 +1,4 @@
 import { client } from "../../../publisher";
-import { Payload } from "./type";
+import { Message } from "./type";
 
-export const sendDeleteConfiguration = async (channel: string, payload: Payload) => client.publish(channel, payload);
+export const sendDeleteConfiguration = async (channel: string, message: Message) => client.publish(channel, message);

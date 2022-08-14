@@ -1,3 +1,4 @@
+import { MessageType } from "../configurationChange/type";
 import { SendUpdateConfigurationFunction } from "../configurationChange/updateConfiguration/type";
 import { UpdateConfigurationFunction } from "../interfaces/updateConfiguration.type";
 import { Configuration } from "./Configuration.type";
@@ -17,6 +18,9 @@ export const updateConfiguration = async ({
     sendUpdateConfiguration,
 }: UpdateConfigurationPayload) => {
     const updatedConfiguration = await updateConfigurationFunction(id, configurationPayload);
-    sendUpdateConfiguration(CONFIGURATION_CHANNEL, updatedConfiguration);
+    sendUpdateConfiguration(CONFIGURATION_CHANNEL, {
+        payload: updatedConfiguration,
+        type: MessageType.UPDATE,
+    });
     return updatedConfiguration;
 };
