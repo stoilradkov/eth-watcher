@@ -11,6 +11,7 @@ app.use(express.json());
 app.get("/test", (_, res) => {
     res.send("Server is operational");
 });
+
 app.use(router);
 app.use(errorHandler);
 
