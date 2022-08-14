@@ -30,7 +30,7 @@ process
         logError(reason, "Unhandled Rejection at Promise", p);
     })
     .on("uncaughtException", err => {
-        console.error(err, "Uncaught Exception thrown");
+        logError(err, "Uncaught Exception thrown");
         process.exit(1);
     });
 start();
