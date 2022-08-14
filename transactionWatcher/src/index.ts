@@ -1,7 +1,7 @@
 import Web3 from "web3";
 import { Api } from "./configurationApi/api";
 import { getClient } from "./db/client";
-import { initializeSubscriber } from "./subscriber";
+import { initializeSubscriber } from "./configurationListener";
 import { TransactionScanner } from "./transactionScanner";
 import { TransactionProcessor } from "./transactionProcessor";
 import { Configuration } from "./types/Configuration.type";
