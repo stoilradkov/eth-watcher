@@ -47,10 +47,12 @@ const start = async () => {
     setLoggingLevel(process.env.NODE_ENV === "development" ? "info" : "warn");
 
     const apiClient = new Api({ uri: process.env.CONFIGURATION_API_URI ?? "" });
-    const configurations = await getConfigurations(apiClient, "/api/configuration");
+    const [configurations, store] = await Promise.all([
+        getConfigurations(apiClient, "/api/configuration"),
+        getStore(process.env.POSTGRES_URI ?? ""),
+    ]);
     logInfo("Initial configurations", configurations);
 
-    const store = await getStore(process.env.POSTGRES_URI ?? "");
     const web3 = getWeb3Instance(`wss://${process.env.ETHEREUM_NETWORK}.infura.io/ws/v3/${process.env.INFURA_API_KEY}`);
     const transactionProcessor = getTransactionProcessor(configurations, store, web3);
 
