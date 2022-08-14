@@ -14,13 +14,7 @@ import { isKeyInObject } from "../util/objectKey";
 import { Api } from "./api.type";
 import { Store } from "./store.type";
 import { Transaction, TransactionPayload } from "./Transaction.type";
-
-export interface TransactionProcessorOptions {
-    configurations: Configuration[];
-    store: Store;
-    web3: Web3;
-    apiClient: Api;
-}
+import { TransactionProcessorOptions } from "./type";
 
 export class TransactionProcessor {
     #configurations: Configuration[];

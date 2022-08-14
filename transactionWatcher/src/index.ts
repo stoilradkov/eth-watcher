@@ -31,7 +31,7 @@ const start = async () => {
         configurations,
         store,
         web3,
-        getConfigurations: getConfigurationsCallback,
+        apiClient: { getConfigurations: getConfigurationsCallback },
     });
 
     await initializeSubscriber(
