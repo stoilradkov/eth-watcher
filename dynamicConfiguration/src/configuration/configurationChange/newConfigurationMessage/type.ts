@@ -3,7 +3,7 @@ import { MessageType } from "../type";
 
 export interface Message {
     payload: Configuration;
-    type: MessageType.UPDATE;
+    type: MessageType.NEW;
 }
 
-export type SendUpdateConfigurationFunction = (channel: string, message: Message) => Promise<void>;
+export type SendNewConfigurationMessageFunction = (channel: string, message: Message) => Promise<void>;
