@@ -1,5 +1,6 @@
 import Web3 from "web3";
 import { BlockHeader } from "web3-eth";
+import { Message, MessageType } from "../configurationListener/Message.type";
 import {
     Configuration,
     NumberFilter,
@@ -28,8 +29,35 @@ export class TransactionProcessor {
         this.#web3 = web3;
     }
 
-    public configurationChangeListener = (message: string) => {
-        console.log(message);
+    public configurationChangeListener = ({ type, payload }: Message) => {
+        switch (type) {
+            case MessageType.NEW:
+                this.addNewConfiguration(payload);
+                break;
+            case MessageType.UPDATE:
+                this.updateConfiguration(payload);
+                break;
+            case MessageType.DELETE:
+                this.deleteConfiguration(payload);
+                break;
+            default:
+                console.log("UNKNOWN TYPE", type);
+                break;
+        }
+    };
+
+    private addNewConfiguration = (configuration: Configuration) => {
+        this.#configurations = [...this.#configurations, configuration];
+    };
+
+    private updateConfiguration = (configuration: Configuration) => {
+        this.#configurations = this.#configurations.map(config =>
+            config.id === configuration.id ? configuration : config
+        );
+    };
+
+    private deleteConfiguration = ({ id }: { id: string }) => {
+        this.#configurations = this.#configurations.filter(config => config.id !== id);
     };
 
     public receiveBlockHeader = async (blockHeader: BlockHeader) => {
