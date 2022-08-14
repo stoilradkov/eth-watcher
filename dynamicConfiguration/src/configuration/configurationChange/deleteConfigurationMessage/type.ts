@@ -7,4 +7,4 @@ export interface Message {
     payload: Payload;
     type: MessageType.DELETE;
 }
-export type SendDeleteConfigurationFunction = (channel: string, message: Message) => Promise<void>;
+export type SendDeleteConfigurationMessageFunction = (channel: string, message: Message) => Promise<void>;

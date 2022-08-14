@@ -1,8 +1,8 @@
 import { Router, Request, Response } from "express";
-import { sendDeleteConfiguration } from "../configurationChange/deleteConfiguration/sendDeleteConfiguration";
-import { deleteConfiguration as deleteConfigurationInDb } from "../db/deleteConfiguration";
+import { sendDeleteConfigurationMessage } from "../configurationChange/deleteConfigurationMessage/sendDeleteConfigurationMessage";
+import { deleteConfiguration as deleteConfigurationInStore } from "../store/deleteConfiguration";
 import { deleteConfiguration } from "../domain/deleteConfiguration";
-import { validateId } from "./util/idValidator";
+import { validateId } from "./validation/idValidator";
 
 const handler = async (req: Request, res: Response) => {
     const id = req.params.id as string | undefined;
@@ -10,8 +10,8 @@ const handler = async (req: Request, res: Response) => {
 
     const deletedId = await deleteConfiguration({
         id,
-        deleteConfigurationFunction: deleteConfigurationInDb,
-        sendDeleteConfiguration,
+        deleteConfigurationInStore,
+        sendDeleteConfigurationMessage,
     });
     res.send({ id: deletedId });
 };

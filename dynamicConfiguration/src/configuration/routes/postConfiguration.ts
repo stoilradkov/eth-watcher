@@ -1,8 +1,8 @@
 import { Router, Request, Response } from "express";
-import { sendNewConfiguration } from "../configurationChange/newConfiguration/sendNewConfiguration";
-import { createConfiguration as createConfigurationInDb } from "./../db/createConfiguration";
+import { sendNewConfigurationMessage } from "../configurationChange/newConfigurationMessage/sendNewConfiguration";
+import { createConfiguration as createConfigurationInStore } from "../store/createConfiguration";
 import { createConfiguration } from "../domain/createConfiguration";
-import { validate } from "./util/configurationValidator";
+import { validate } from "./validation/configurationValidator";
 
 const handler = async (req: Request, res: Response) => {
     const configurationPayload = req.body;
@@ -10,8 +10,8 @@ const handler = async (req: Request, res: Response) => {
 
     const configuration = await createConfiguration({
         configurationPayload,
-        createConfigurationFunction: createConfigurationInDb,
-        sendNewConfiguration,
+        createConfigurationInStore,
+        sendNewConfigurationMessage,
     });
     res.send(configuration);
 };

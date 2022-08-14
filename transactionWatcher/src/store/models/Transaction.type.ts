@@ -1,4 +1,4 @@
-export interface Transaction {
+export interface TransactionAttributes {
     blockHash?: string | null;
     blockNumber?: number | null;
     from: string;
@@ -10,8 +10,5 @@ export interface Transaction {
     transactionIndex?: number | null;
     to?: string | null;
     value: string;
-}
-export interface TransactionPayload {
-    transaction: Transaction;
-    id: string;
+    configurationId: string;
 }

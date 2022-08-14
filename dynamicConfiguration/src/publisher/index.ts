@@ -1,10 +1,13 @@
 import * as redis from "redis";
 
+export interface PublisherConfig {
+    url: string;
+}
 class Publisher {
     #publisher: redis.RedisClientType;
     #isConnected: boolean;
 
-    constructor(url: string) {
+    constructor({ url }: PublisherConfig) {
         this.#publisher = redis.createClient({ url });
         this.#isConnected = false;
     }
@@ -17,4 +20,4 @@ class Publisher {
         await this.#publisher.publish(channel, JSON.stringify(message));
     };
 }
-export const client = new Publisher(process.env.REDIS_URI ?? "");
+export const client = new Publisher({ url: process.env.REDIS_URI ?? "" });
