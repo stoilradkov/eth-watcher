@@ -1,6 +1,11 @@
+import { convertConfigurations } from "./../ports/storeToDomain/convertConfigurations";
 import { GetConfigurationsFunction } from "../interfaces/getConfigurations.type";
 
-export const getConfiguratons = async (getConfigurations: GetConfigurationsFunction) => {
-    const configurations = await getConfigurations();
-    return configurations;
+export interface GetConfigurationsPayload {
+    getConfigurationsFromStore: GetConfigurationsFunction;
+}
+
+export const getConfiguratons = async ({ getConfigurationsFromStore }: GetConfigurationsPayload) => {
+    const configurations = await getConfigurationsFromStore();
+    return convertConfigurations(configurations);
 };

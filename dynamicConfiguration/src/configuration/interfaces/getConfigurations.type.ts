@@ -1,3 +1,3 @@
-import { Configuration } from "../domain/Configuration.type";
+import { ConfigurationDocument } from "../store/models/Configuration";
 
-export type GetConfigurationsFunction = () => Promise<Configuration[]>;
+export type GetConfigurationsFunction = () => Promise<ConfigurationDocument[]>;

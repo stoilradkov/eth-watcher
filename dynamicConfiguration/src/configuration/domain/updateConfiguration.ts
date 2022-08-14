@@ -1,26 +1,33 @@
 import { MessageType } from "../configurationChange/type";
-import { SendUpdateConfigurationFunction } from "../configurationChange/updateConfiguration/type";
+import { SendUpdateConfigurationMessageFunction } from "../configurationChange/updateConfigurationMessage/type";
 import { UpdateConfigurationFunction } from "../interfaces/updateConfiguration.type";
+import { convertConfigurationPayload } from "../ports/domainToStore/convertConfigurationPayload";
+import { convertConfiguration } from "../ports/storeToDomain/convertConfiguration";
 import { Configuration } from "./Configuration.type";
 import { CONFIGURATION_CHANNEL } from "./configurationChannel";
 
 export interface UpdateConfigurationPayload {
     id: string;
     configurationPayload: Configuration;
-    updateConfigurationFunction: UpdateConfigurationFunction;
-    sendUpdateConfiguration: SendUpdateConfigurationFunction;
+    updateConfigurationInStore: UpdateConfigurationFunction;
+    sendUpdateConfigurationMessage: SendUpdateConfigurationMessageFunction;
 }
 
 export const updateConfiguration = async ({
     id,
     configurationPayload,
-    updateConfigurationFunction,
-    sendUpdateConfiguration,
+    updateConfigurationInStore,
+    sendUpdateConfigurationMessage,
 }: UpdateConfigurationPayload) => {
-    const updatedConfiguration = await updateConfigurationFunction(id, configurationPayload);
-    sendUpdateConfiguration(CONFIGURATION_CHANNEL, {
+    const convertedConfigurationPayload = convertConfigurationPayload(configurationPayload);
+    const updatedConfiguration = convertConfiguration(
+        await updateConfigurationInStore(id, convertedConfigurationPayload)
+    );
+
+    sendUpdateConfigurationMessage(CONFIGURATION_CHANNEL, {
         payload: updatedConfiguration,
         type: MessageType.UPDATE,
     });
+
     return updatedConfiguration;
 };

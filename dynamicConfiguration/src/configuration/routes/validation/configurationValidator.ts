@@ -1,7 +1,7 @@
 import { validate as jsonValidate } from "jsonschema";
 import { BadRequestError } from "../../../errors/badRequestError";
 import { Configuration } from "../../domain/Configuration.type";
-import configurationSchema from "../../schema.json";
+import configurationSchema from "../../configurationSchema.json";
 
 export function validate(configurationPayload: unknown): asserts configurationPayload is Configuration {
     if (configurationPayload === undefined || !jsonValidate(configurationPayload, configurationSchema).valid) {
