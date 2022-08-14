@@ -1,4 +1,5 @@
 import * as redis from "redis";
+import { logError, logInfo } from "../logger";
 
 export interface PublisherConfig {
     url: string;
@@ -13,11 +14,21 @@ class Publisher {
     }
 
     public publish = async <T>(channel: string, message: T) => {
+        logInfo("Publishing message", message);
         if (!this.#isConnected) {
-            await this.#publisher.connect();
-            this.#isConnected = true;
+            try {
+                await this.#publisher.connect();
+                this.#isConnected = true;
+            } catch (e) {
+                logError("Error connecting to redis instance", e);
+                return;
+            }
         }
-        await this.#publisher.publish(channel, JSON.stringify(message));
+        try {
+            await this.#publisher.publish(channel, JSON.stringify(message));
+        } catch (e) {
+            logError("Error publishing message", channel, message, e);
+        }
     };
 }
 export const client = new Publisher({ url: process.env.REDIS_URI ?? "" });
