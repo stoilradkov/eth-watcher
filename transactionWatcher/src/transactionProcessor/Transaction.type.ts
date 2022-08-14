@@ -10,6 +10,8 @@ export interface Transaction {
     transactionIndex?: number | null;
     to?: string | null;
     value: string;
-    configurationId: string;
 }
-export type RawTransaction = Omit<Transaction, "configurationId">;
+export interface TransactionPayload {
+    transaction: Transaction;
+    id: string;
+}

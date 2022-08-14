@@ -1,6 +1,7 @@
 import Web3 from "web3";
 import { BlockHeader } from "web3-eth";
 import { Message, MessageType } from "../configurationListener/Message.type";
+import { convertTransactionPayloads } from "../ports/domainToStore/convertTransactionPayload";
 import {
     Configuration,
     NumberFilter,
@@ -9,23 +10,23 @@ import {
     StringFilterType,
 } from "../types/Configuration.type";
 import { isKeyInObject } from "../util/objectKey";
-import { Client, SaveTransactionPayload } from "./client.type";
-import { RawTransaction } from "./Transaction.type";
+import { Store } from "./store.type";
+import { Transaction, TransactionPayload } from "./Transaction.type";
 
 export interface TransactionProcessorOptions {
     configurations: Configuration[];
-    client: Client;
+    store: Store;
     web3: Web3;
 }
 
 export class TransactionProcessor {
     #configurations: Configuration[];
-    #client: Client;
+    #store: Store;
     #web3: Web3;
 
-    constructor({ configurations, client, web3 }: TransactionProcessorOptions) {
+    constructor({ configurations, store, web3 }: TransactionProcessorOptions) {
         this.#configurations = configurations;
-        this.#client = client;
+        this.#store = store;
         this.#web3 = web3;
     }
 
@@ -65,22 +66,22 @@ export class TransactionProcessor {
         this.processTransactions(block.transactions);
     };
 
-    private processTransactions = async (transactions: RawTransaction[]) => {
+    private processTransactions = async (transactions: Transaction[]) => {
         const matchedTransactions = transactions
             .map(this.mapTransaction)
-            .filter(this.filterMatchedTransactions) as SaveTransactionPayload[];
+            .filter(this.filterMatchedTransactions) as TransactionPayload[];
 
-        this.#client.saveTransactions(matchedTransactions);
+        this.#store.saveTransactions(convertTransactionPayloads(matchedTransactions));
     };
 
-    private mapTransaction = (transaction: RawTransaction) => {
+    private mapTransaction = (transaction: Transaction) => {
         const matchingConfig = this.#configurations.find(config => this.configMatchesTransaction(config, transaction));
         return { id: matchingConfig?.id, transaction };
     };
 
     private filterMatchedTransactions = ({ id }: { id?: string }) => id !== undefined;
 
-    private configMatchesTransaction = (config: Configuration, transaction: RawTransaction) => {
+    private configMatchesTransaction = (config: Configuration, transaction: Transaction) => {
         const filtersKeys = this.getTransactionKeysFromConfig(config);
         return this.matchesAllFilters(filtersKeys, config, transaction);
     };
@@ -88,7 +89,7 @@ export class TransactionProcessor {
     private getTransactionKeysFromConfig = (config: Configuration) =>
         Object.keys(config).filter(key => key !== "id" && key !== "configurationName");
 
-    private matchesAllFilters = (filterKeys: string[], config: Configuration, transaction: RawTransaction) => {
+    private matchesAllFilters = (filterKeys: string[], config: Configuration, transaction: Transaction) => {
         for (const filterKey of filterKeys) {
             if (!isKeyInObject(filterKey, transaction) || !isKeyInObject(filterKey, config)) {
                 return false;
