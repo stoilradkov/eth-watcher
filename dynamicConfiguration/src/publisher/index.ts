@@ -30,7 +30,6 @@ class Publisher {
      * Publishes a message to the specified channel
      * @param channel - name of the channel
      * @param message - the message to be sent
-     * @returns void
      */
     public publish = async <T>(channel: string, message: T) => {
         logInfo("Publishing message", message);

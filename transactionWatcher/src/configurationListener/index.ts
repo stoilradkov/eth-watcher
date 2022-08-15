@@ -7,6 +7,11 @@ export type Listener<T> = (messagePayload: T) => void;
 
 const parseMessage = <T>(message: string): T => JSON.parse(message);
 
+/**
+ * Initializes a redis client and subscribes to a channel
+ * @param url - url to which to connect to
+ * @param listener - function invoked when a message is received from the subscriber
+ */
 export const initializeSubscriber = async <T>(url: string, listener: Listener<T>) => {
     const client = redis.createClient({
         url,

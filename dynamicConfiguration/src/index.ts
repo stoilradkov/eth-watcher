@@ -13,17 +13,12 @@ const checkEnvironmentVars = () => {
 };
 
 /**
- * Sets logging level. Message with level below the level
+ * Sets logging level. Messages with level below the level
  * set will not be visible
  * @param level - level to set
- * @returns void
  */
 const setLoggingLevel = (level: "info" | "warn" | "error") => logger.setLevel(level);
 
-/**
- * Performs initialization and starts the
- * REST api
- */
 const start = async () => {
     checkEnvironmentVars();
     setLoggingLevel(process.env.NODE_ENV === "development" ? "info" : "warn");

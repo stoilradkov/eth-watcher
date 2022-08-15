@@ -5,6 +5,10 @@ import { logError, logInfo, logWarn } from "../logger";
 
 export type SubscriptionHandlerFunction = (data: BlockHeader) => void;
 
+/**
+ * Provides a subscription method to subscribe to
+ * a newBlockHeaders endpoint
+ */
 export class TransactionScanner {
     #web3Client: Web3;
     #subscription: Subscription<BlockHeader> | null;
@@ -14,6 +18,10 @@ export class TransactionScanner {
         this.#subscription = null;
     }
 
+    /**
+     * Subscribes to a newBlockHeaders endpoint
+     * @param subscriptionHandler - function which is invoked when a message is received
+     */
     public subscribe = (subscriptionHandler: SubscriptionHandlerFunction) => {
         if (this.#subscription !== null) {
             logWarn("Tried to subscribe twice");
@@ -26,6 +34,9 @@ export class TransactionScanner {
         });
     };
 
+    /**
+     * Unsubscribes from a topic
+     */
     public unsubscribe = () => {
         this.#subscription?.unsubscribe(error => {
             if (error !== null) {

@@ -12,6 +12,9 @@ export type ReturnType<T> =
       }
     | { data: null; error: Error };
 
+/**
+ * Provides a get method to query a REST api
+ */
 export class Api {
     #axios: AxiosInstance;
 
@@ -21,6 +24,14 @@ export class Api {
         });
     }
 
+    /**
+     * Makes a get call to a specified endpoint and returns the received data
+     * or an error, if an error has occurred.
+     * @param url - endpoint url
+     * @param params - optional object of params
+     * @returns an object of data and error keys, where the error is null if
+     * no error occurred or data is null if an error occurred
+     */
     public get = async <ResponseType>(url: string, params?: unknown): Promise<ReturnType<ResponseType>> => {
         try {
             const response = await this.#axios.get(url, { params });
