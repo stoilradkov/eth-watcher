@@ -6,4 +6,5 @@ import { ConfigurationDocument } from "../../store/models/Configuration";
  * @param configuration - db models to be converted
  * @returns the configuration objects
  */
-export const convertConfigurations = (configurations: ConfigurationDocument[]): Configuration[] => configurations;
+export const convertConfigurations = (configurations: ConfigurationDocument[]): Configuration[] =>
+    configurations.map(configuration => configuration.toJSON());
