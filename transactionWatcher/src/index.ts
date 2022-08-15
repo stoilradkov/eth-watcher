@@ -44,13 +44,14 @@ const start = async () => {
         apiClient: { getConfigurations: getConfigurationsCallback },
     });
 
-    await initializeSubscriber(
-        process.env.REDIS_URI ?? "",
-        transactionProcessor.configurationChangeListener.bind(this)
-    );
+    await initializeSubscriber({
+        channelName: "CONFIGURATION",
+        url: process.env.REDIS_URI ?? "",
+        listener: transactionProcessor.configurationChangeListener.bind(this),
+    });
 
     const transactionScanner = new TransactionScanner(web3);
-    transactionScanner.subscribe(transactionProcessor.receiveBlockHeader.bind(this));
+    transactionScanner.subscribe("newBlockHeaders", transactionProcessor.receiveBlockHeader.bind(this));
 };
 
 process
