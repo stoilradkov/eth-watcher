@@ -12,6 +12,14 @@ export interface UpdateConfigurationPayload {
     sendMessage: SendMessageFunction;
 }
 
+/**
+ * Updates a configuration by a given id and new attributes, sends a message to a publisher
+ * @param id - the id of the configuration to be updated
+ * @param configurationPayload - object containing the attributes of the configuration which should be updated
+ * @param updateConfigurationInStore - a function which is called to store the updated configuration
+ * @param sendMessage - a function which is called to send a message
+ * @returns the updated configuration
+ */
 export const updateConfiguration = async ({
     id,
     configurationPayload,

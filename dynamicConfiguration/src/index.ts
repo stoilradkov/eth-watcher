@@ -12,6 +12,11 @@ const checkEnvironmentVars = () => {
     }
 };
 
+/**
+ * Sets logging level. Messages with level below the level
+ * set will not be visible
+ * @param level - level to set
+ */
 const setLoggingLevel = (level: "info" | "warn" | "error") => logger.setLevel(level);
 
 const start = async () => {

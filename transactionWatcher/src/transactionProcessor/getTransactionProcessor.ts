@@ -11,6 +11,14 @@ export interface TransactionProcessorConfig {
     apiClient: Api;
 }
 
+/**
+ * Creates and returns an instance of a transaction processor
+ *  @param configurations - list of configurations
+ *  @param store - store implementation
+ *  @param web3 - web3 instance
+ *  @param apiClient - implementation of an api client
+ * @returns a new transaction processor instance
+ */
 export const getTransactionProcessor = ({ configurations, store, web3, apiClient }: TransactionProcessorConfig) =>
     new TransactionProcessor({
         configurations,

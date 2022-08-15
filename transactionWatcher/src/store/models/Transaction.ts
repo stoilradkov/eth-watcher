@@ -1,5 +1,9 @@
 import { DataTypes, Sequelize } from "sequelize";
 
+/**
+ * Creates a transaction model
+ * @param client - sequelize client which registers the model
+ */
 export const transactionModel = async (client: Sequelize) => {
     const transaction = client.define("transaction", {
         blockHash: {

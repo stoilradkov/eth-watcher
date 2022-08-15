@@ -9,8 +9,18 @@ import { getStore } from "./store/getStore";
 import { checkEnvironmentVars } from "./checkEnvironment";
 import { getTransactionProcessor } from "./transactionProcessor/getTransactionProcessor";
 
+/**
+ * Sets logging level. Messages with level below the level
+ * set will not be visible
+ * @param level - level to set
+ */
 const setLoggingLevel = (level: "info" | "warn" | "error") => logger.setLevel(level);
 
+/**
+ * Get's a web3 istance initialized with a websocket provider
+ * @param host - provider's url
+ * @returns a web3 instance
+ */
 const getWeb3Instance = (host: string) => new Web3(new Web3.providers.WebsocketProvider(host));
 
 const start = async () => {

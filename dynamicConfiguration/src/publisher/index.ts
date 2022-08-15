@@ -4,17 +4,33 @@ import { logError, logInfo } from "../logger";
 export interface PublisherConfig {
     url: string;
 }
+
+/**
+ * Represents a redis client publisher. The class can be used
+ * to send messages to a specified topic.
+ */
 class Publisher {
     #publisher: redis.RedisClientType;
     #isConnected: boolean;
     #url: string;
 
+    /**
+     *
+     * @constructor
+     * @param config - required configuration for the publisher. Should contain at least
+     * the url of the redis instance to which to connect to
+     */
     constructor({ url }: PublisherConfig) {
         this.#publisher = redis.createClient({ url });
         this.#isConnected = false;
         this.#url = url;
     }
 
+    /**
+     * Publishes a message to the specified channel
+     * @param channel - name of the channel
+     * @param message - the message to be sent
+     */
     public publish = async <T>(channel: string, message: T) => {
         logInfo("Publishing message", message);
         if (!this.#isConnected) {

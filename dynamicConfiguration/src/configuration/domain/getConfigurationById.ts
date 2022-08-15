@@ -7,6 +7,13 @@ export interface GetConfigurationByIdPayload {
     getConfigurationByIdFromStore: GetConfigurationByIdFunction;
 }
 
+/**
+ * Retrieves a configuration by its id
+ * @param id - the id of the configuration to be retrieved
+ * @param getConfigurationByIdFromStore - a function which is called to retrieve the configuration by id
+ * @throws NotFoundError if no configuration was found with the given id
+ * @returns the configuration with that id
+ */
 export const getConfigurationById = async ({ id, getConfigurationByIdFromStore }: GetConfigurationByIdPayload) => {
     const configuration = convertConfigurationNullable(await getConfigurationByIdFromStore(id));
     if (configuration === null) {

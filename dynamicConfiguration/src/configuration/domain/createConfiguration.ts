@@ -11,6 +11,13 @@ export interface CreateConfigurationPayload {
     sendMessage: SendMessageFunction;
 }
 
+/**
+ * Creates a new configuration, stores it in the database and sends a message to a publisher
+ * @param configurationPayload - object containing the attributes of the configuration to be created
+ * @param createConfigurationInStore - a function which is called to store the created configuration
+ * @param sendMessage - a function which is called to send a message
+ * @returns the newly created configuration
+ */
 export const createConfiguration = async ({
     configurationPayload,
     createConfigurationInStore,
