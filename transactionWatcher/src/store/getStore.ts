@@ -1,7 +1,7 @@
-import { Model, ModelStatic, Sequelize } from "sequelize";
+import { Sequelize } from "sequelize";
 import { Store } from "../transactionProcessor/store.type";
 import * as models from "./models";
-import { TransactionAttributes } from "./models/Transaction.type";
+import { getSaveTransactions } from "./saveTransactions";
 
 /**
  * Registers all models created and returns a sequelize client
@@ -18,18 +18,6 @@ const getSequelizeClient = async (uri: string) => {
     }
 
     return client;
-};
-
-/**
- * Returns a function which creates and saves an array of transactions in the store
- * @param transactionModel - instance of transaction model
- * @returns a function which creates and saves an array of transactions in the store
- */
-const getSaveTransactions = (transactionModel: ModelStatic<Model<TransactionAttributes, TransactionAttributes>>) => {
-    return async (transactionsPayload: TransactionAttributes[]) => {
-        await transactionModel.bulkCreate(transactionsPayload);
-        return true;
-    };
 };
 
 /**

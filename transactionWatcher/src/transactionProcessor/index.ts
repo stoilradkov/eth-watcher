@@ -71,8 +71,12 @@ export class TransactionProcessor {
      */
     public receiveBlockHeader = async (blockHeader: BlockHeader) => {
         logInfo("Received block header", blockHeader);
-        const block = await this.#web3.eth.getBlock(blockHeader.hash, true);
-        this.processTransactions(block.transactions);
+        try {
+            const block = await this.#web3.eth.getBlock(blockHeader.hash, true);
+            this.processTransactions(block.transactions);
+        } catch (e) {
+            logError("Error while trying to get a block", blockHeader, e);
+        }
     };
 
     /**
